@@ -11,12 +11,12 @@ import 'package:app_vlxd/services/VatTuService.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 List<VatTu> vatTuList = [];
 
 void main() {
-  runApp(ChangeNotifierProvider(create: (_)=> CartProvider(),
-  child: BuildingMaterialApp(),
+  runApp(ChangeNotifierProvider(
+    create: (_) => CartProvider(),
+    child: BuildingMaterialApp(),
   ));
 }
 
@@ -54,6 +54,7 @@ class _MainScreenState extends State<MainScreen> {
       currentIndex = index;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -145,21 +146,21 @@ class _HomePageState extends State<HomePage> {
             elevation: 10,
             title: searchQuery.isNotEmpty
                 ? Row(
-              children: [
-                IconButton(
-                  icon: Icon(Icons.arrow_back, color: Colors.teal),
-                  onPressed: () {
-                    setState(() {
-                      searchQuery = '';
-                      searchResults = [];
-                    });
-                  },
-                ),
-                Expanded(
-                  child: SearchBar(onSearch: searchProducts),
-                ),
-              ],
-            )
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.arrow_back, color: Colors.teal),
+                        onPressed: () {
+                          setState(() {
+                            searchQuery = '';
+                            searchResults = [];
+                          });
+                        },
+                      ),
+                      Expanded(
+                        child: SearchBar(onSearch: searchProducts),
+                      ),
+                    ],
+                  )
                 : SearchBar(onSearch: searchProducts),
           ),
         ),
@@ -178,20 +179,20 @@ class _HomePageState extends State<HomePage> {
                 ),
                 searchResults.isEmpty
                     ? Center(
-                  child: Text(
-                    "Không có sản phẩm phù hợp",
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
-                  ),
-                )
+                        child: Text(
+                          "Không có sản phẩm phù hợp",
+                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                        ),
+                      )
                     : Expanded(
-                  child: ListView.builder(
-                    itemCount: searchResults.length,
-                    itemBuilder: (context, index) {
-                      final product = searchResults[index];
-                      return ProductItem(product: product);
-                    },
-                  ),
-                ),
+                        child: ListView.builder(
+                          itemCount: searchResults.length,
+                          itemBuilder: (context, index) {
+                            final product = searchResults[index];
+                            return ProductItem(product: product);
+                          },
+                        ),
+                      ),
               ] else ...[
                 Expanded(
                   child: SingleChildScrollView(
@@ -211,50 +212,51 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           Positioned(
-            right: 16,
-            bottom: 16,
-            child: Stack(
-              children: [
-                FloatingActionButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const CartScreen()),
-                    );
-                  },
-                  backgroundColor: Colors.teal,
-                  child: Icon(Icons.shopping_cart, color: Colors.white, size: 26,),
-                ),
-                Positioned(
-                  right: 1,
-                    top: -2,
-                    child: Consumer<CartProvider>(builder:
-                    (context, cartProvider, child){
-                      return cartProvider.getTotal > 0
-                          ? Container(
-                          padding: EdgeInsets.all(6),
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            shape: BoxShape.circle,
-                          ),
-                        child: Text(
-                          '${cartProvider.getTotal}',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ): SizedBox();
-                    }
-                    ,)
-                )
-              ],
-            )
-
-
-          ),
-
+              right: 16,
+              bottom: 16,
+              child: Stack(
+                children: [
+                  FloatingActionButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const CartScreen()),
+                      );
+                    },
+                    backgroundColor: Colors.teal,
+                    child: Icon(
+                      Icons.shopping_cart,
+                      color: Colors.white,
+                      size: 26,
+                    ),
+                  ),
+                  Positioned(
+                      right: 1,
+                      top: -2,
+                      child: Consumer<CartProvider>(
+                        builder: (context, cartProvider, child) {
+                          return cartProvider.getTotal > 0
+                              ? Container(
+                                  padding: EdgeInsets.all(6),
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Text(
+                                    '${cartProvider.getTotal}',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                )
+                              : SizedBox();
+                        },
+                      ))
+                ],
+              )),
         ],
       ),
     );
@@ -269,21 +271,28 @@ class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetailScreen(product: product)));
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ProductDetailScreen(product: product)));
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Row(
           children: [
-            Image.network(product.image, height: 80, width: 80, fit: BoxFit.cover),
+            Image.network(product.image,
+                height: 80, width: 80, fit: BoxFit.cover),
             SizedBox(width: 16),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(product.ten, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text(product.ten,
+                    style:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 SizedBox(height: 4),
-                Text('${product.donGia} đ', style: TextStyle(fontSize: 16, color: Colors.green)),
+                Text('${product.donGia} đ',
+                    style: TextStyle(fontSize: 16, color: Colors.green)),
               ],
             ),
           ],
@@ -307,7 +316,6 @@ class SearchBar extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.teal, width: 2),
-
       ),
       child: Row(
         children: [
@@ -321,7 +329,6 @@ class SearchBar extends StatelessWidget {
               ),
             ),
           ),
-
           Container(
             height: 48,
             child: ElevatedButton(
@@ -331,16 +338,16 @@ class SearchBar extends StatelessWidget {
                   onSearch(keyword);
                 }
               },
-              child: Icon(Icons.search, color: Colors.white), // Đổi màu của icon
+              child:
+                  Icon(Icons.search, color: Colors.white), // Đổi màu của icon
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.teal,
                 foregroundColor: Colors.white,
                 padding: EdgeInsets.all(12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(12),
-                    bottomRight: Radius.circular(12)
-                  ),
+                      topRight: Radius.circular(12),
+                      bottomRight: Radius.circular(12)),
                 ),
               ),
             ),
@@ -397,19 +404,20 @@ class RecommendedProducts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(vatTuList.isEmpty){
+    if (vatTuList.isEmpty) {
       return Center(
-        child: const Text("Không có sản phẩm đề xuất",
+          child: const Text(
+        "Không có sản phẩm đề xuất",
         style: TextStyle(fontSize: 16, color: Colors.grey),
-        )
-      );
+      ));
     }
 
     final random = Random();
     final Set<int> selectedIndices = {};
     final List<VatTu> recommendedList = [];
 
-    while (recommendedList.length < 8 && recommendedList.length < vatTuList.length) {
+    while (recommendedList.length < 8 &&
+        recommendedList.length < vatTuList.length) {
       int randomIndex = random.nextInt(vatTuList.length);
       if (!selectedIndices.contains(randomIndex)) {
         selectedIndices.add(randomIndex);
@@ -436,10 +444,12 @@ class RecommendedProducts extends StatelessWidget {
             itemBuilder: (context, index) {
               final product = recommendedList[index];
               return GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(
-                      builder: (context)=> ProductDetailScreen(product: product))
-                  );
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ProductDetailScreen(product: product)));
                 },
                 child: Container(
                   width: 120,
@@ -447,14 +457,17 @@ class RecommendedProducts extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Image.network(product.image, height: 80, width: 120, fit: BoxFit.cover),
+                      Image.network(product.image,
+                          height: 80, width: 120, fit: BoxFit.cover),
                       SizedBox(height: 8),
                       Text(product.ten,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold)),
                       SizedBox(height: 4),
-                      Text('${product.donGia} đ', style: TextStyle(fontSize: 14, color: Colors.green)),
+                      Text('${product.donGia} đ',
+                          style: TextStyle(fontSize: 14, color: Colors.green)),
                     ],
                   ),
                 ),
@@ -488,14 +501,14 @@ class AllProducts extends StatelessWidget {
         isLoading
             ? Center(child: CircularProgressIndicator())
             : ListView.builder(
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: vatTuList.length,
-          itemBuilder: (context, index) {
-            final product = vatTuList[index];
-            return ProductItem(product: product);
-          },
-        ),
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: vatTuList.length,
+                itemBuilder: (context, index) {
+                  final product = vatTuList[index];
+                  return ProductItem(product: product);
+                },
+              ),
       ],
     );
   }
